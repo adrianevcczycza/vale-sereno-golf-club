@@ -1,0 +1,4 @@
+# Arquivos de produção gerados pelo Vite e pela pré-renderização.
+/*.html linguist-generated
+/assets/*.js linguist-generated
+/assets/*.css linguist-generated
