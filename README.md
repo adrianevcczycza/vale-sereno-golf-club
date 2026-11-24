@@ -1,63 +1,55 @@
 # Vale Sereno Golf Club
 
-Site institucional em português para um conceito de clube de golfe. Reúne a apresentação do clube, as experiências no campo e orientações para a primeira visita.
+Site institucional responsivo em português, criado com React e Vite. As quatro páginas são renderizadas em HTML durante o build, e o React assume a interface no navegador. A hospedagem é estática e pode servir as páginas diretamente.
 
-## Abrir o site
+## Rodar localmente
 
-Extraia o pacote e abra `index.html` no navegador. O projeto usa HTML e CSS, com imagens WebP locais. Pode ser publicado diretamente em uma hospedagem estática. As fontes do Google Fonts carregam com conexão à internet e têm alternativas locais.
-
-## Estrutura
-
-| Arquivo | Conteúdo |
-| --- | --- |
-| `index.html` | Página inicial, experiências, primeira visita e contato |
-| `campo.html`, `jogo.html`, `green.html` | Páginas das experiências |
-| `style.css` | Estilos compartilhados e layout responsivo |
-| `assets/` | Fotografias ilustrativas |
-| `.nojekyll` | Configuração para servir os arquivos estáticos no GitHub Pages |
-
-## Enviar o código ao GitHub
-
-Extraia o ZIP. A pasta extraída deve conter `index.html`, as três páginas de experiências, `style.css`, `assets/`, `.nojekyll` e este README. Mantenha essa estrutura ao enviar os arquivos.
-
-### Pelo navegador
-
-1. Abra o repositório de destino no GitHub. Para um projeto novo, crie um repositório dedicado ao Vale Sereno.
-2. Em **Add file → Upload files**, envie os arquivos extraídos e a pasta `assets/`. Em um repositório vazio, use **uploading an existing file**. Confira se `index.html` ficou na raiz.
-3. Registre o commit com a mensagem `Adiciona o site Vale Sereno Golf Club`.
-
-### Pelo terminal, para um repositório novo e vazio
-
-Abra o terminal na pasta extraída e substitua `USUARIO/REPOSITORIO` pelo endereço do repositório que você criou no GitHub.
+Use Node.js 22.12 ou superior. Na raiz do repositório, execute:
 
 ```bash
-git init -b main
-git add .
-git commit -m "Adiciona o site Vale Sereno Golf Club"
-git remote add origin https://github.com/USUARIO/REPOSITORIO.git
-git push -u origin main
+npm ci
+npm run dev
 ```
 
-## Colocar o site no ar com GitHub Pages
+Abra o endereço indicado no terminal. Para testar a versão de produção, execute:
 
-1. No repositório, abra **Settings → Pages**.
-2. Em **Build and deployment → Source**, selecione **Deploy from a branch**.
-3. Selecione a branch que recebeu os arquivos, normalmente **main**, e a pasta **/(root)**. Clique em **Save**.
-4. Acompanhe a publicação em **Actions**. Quando terminar, abra o endereço exibido em **Settings → Pages**.
-5. Confira a página inicial, os três cartões, as setas de retorno e o layout no celular.
+```bash
+npm run build
+npm run preview
+```
 
-Se o endereço mostrar uma página 404, confira se o `index.html` está na raiz da branch escolhida e se a execução de publicação em **Actions** terminou com sucesso. Para atualizar o site depois, envie um novo commit à branch configurada.
+## Organização do código
 
-[Guia oficial do GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
+| Caminho | Conteúdo |
+| --- | --- |
+| `site/src/Home.jsx` | Página inicial, cartões de experiências, primeira visita e contato |
+| `site/src/Experience.jsx` | Página reutilizada para campo, jogo e green |
+| `site/src/experiences.js` | Títulos, textos e descrições das experiências |
+| `site/src/components.jsx` | Marca, rodapé e imagens compartilhadas |
+| `site/src/style.css` | Estilos e pontos de quebra do layout |
+| `site/public/assets/` | Fotografias WebP utilizadas no build |
+| `scripts/prerender.mjs` | Geração do HTML das quatro páginas a partir dos componentes React |
+| `dist/` | Arquivos gerados localmente pelo build |
+
+## Publicar no GitHub Pages
+
+O site é publicado a partir da raiz da branch `main`. As URLs `index.html`, `campo.html`, `jogo.html` e `green.html` são mantidas.
+
+1. Faça as alterações em `site/` e execute `npm run build`.
+2. Copie o conteúdo de `dist/` para a raiz do repositório, incluindo os arquivos gerados em `assets/`. Mantenha `site/`, `scripts/`, a configuração do Vite e o arquivo `.nojekyll` na raiz. Para uma hospedagem estática separada, use `dist/` como diretório de saída.
+3. Envie o commit para `main`. Em **Settings → Pages**, confirme **Deploy from a branch → main → /(root)**.
+4. Acompanhe o deploy em **Actions** e teste a página inicial e os links de experiências no site publicado.
+
+[Site público](https://adrianevcczycza.github.io/vale-sereno-golf-club/) · [Guia oficial do GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site) · [Build para produção com Vite](https://vite.dev/guide/build.html)
 
 ## Ativar os canais de contato
 
-A seção de contato já apresenta os três canais. Para ativá-los, substitua os nomes dentro dos itens da lista `contact-channels` em `index.html` por links para os dados oficiais.
+A área de contato em `site/src/Home.jsx` apresenta WhatsApp, Instagram e Gmail. Quando tiver os dados oficiais, adicione um elemento `<a>` dentro de cada item da lista `contact-channels`.
 
-| Canal | Formato |
+| Canal | Destino do link |
 | --- | --- |
 | WhatsApp | `https://wa.me/NUMERO`, com código do país e DDD, usando apenas dígitos |
 | Instagram | `https://www.instagram.com/USUARIO/`, sem o símbolo @ |
 | Gmail | `mailto:ENDERECO`, com o endereço completo |
 
-Depois de cadastrar os links, remova o parágrafo `contact-note` e teste cada canal.
+Depois de cadastrar os links, remova o parágrafo `contact-note`, recompile e teste cada canal.
